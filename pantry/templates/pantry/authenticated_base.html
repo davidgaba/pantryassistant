@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pantry Assistant{% block title %}{% endblock %}</title>
+
+    <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-size: 1.1rem;
+        }
+
+        #content-wrapper {
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+
+        header {
+            padding: 10px 0;
+            background-color: #052874;
+            color: #f2f2f2;
+            text-align: center;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            padding: 35px 15px;
+        }
+
+        #profile-icon {
+            width: 35px;
+            height: 35px;
+        }
+
+        #profile-icon path, #logout-btn path {
+            fill: white;
+        }
+
+        #logout-btn {
+            width: 15px;
+            height: 15px;
+            text-decoration: none;
+        }
+
+        nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 86px;
+            background-color: #052874;
+        }
+
+        nav ul {
+            display: flex;
+            justify-content: space-evenly;
+            align-items: center;
+            padding: 0;
+            margin: 15px 0;
+        }
+
+        nav ul li {
+            list-style-type: none;
+
+            width: 20%;
+            text-align: center;
+        }
+
+        nav ul li a {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+
+            color: #f2f2f2;
+            font-size: .8rem;
+            text-decoration: none; 
+        }
+
+        .nav-icon {
+            width: 25px; 
+            height: 25px;
+            margin-bottom: 5px;
+
+            filter: invert(1);     
+        }
+
+        main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            box-sizing: border-box;
+            padding: 10px 20px;
+            width: 90%;
+            margin: auto;
+        }
+
+        footer {
+            font-size: 0.9rem;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+    </style>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous" defer></script>
+</head>
+<body>
+    <div id="content-wrapper">
+        <header>
+            <svg id="profile-icon" viewBox="0 0 24 24" fill="#000000" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M22 12C22 6.49 17.51 2 12 2C6.49 2 2 6.49 2 12C2 14.9 3.25 17.51 5.23 19.34C5.23 19.35 5.23 19.35 5.22 19.36C5.32 19.46 5.44 19.54 5.54 19.63C5.6 19.68 5.65 19.73 5.71 19.77C5.89 19.92 6.09 20.06 6.28 20.2C6.35 20.25 6.41 20.29 6.48 20.34C6.67 20.47 6.87 20.59 7.08 20.7C7.15 20.74 7.23 20.79 7.3 20.83C7.5 20.94 7.71 21.04 7.93 21.13C8.01 21.17 8.09 21.21 8.17 21.24C8.39 21.33 8.61 21.41 8.83 21.48C8.91 21.51 8.99 21.54 9.07 21.56C9.31 21.63 9.55 21.69 9.79 21.75C9.86 21.77 9.93 21.79 10.01 21.8C10.29 21.86 10.57 21.9 10.86 21.93C10.9 21.93 10.94 21.94 10.98 21.95C11.32 21.98 11.66 22 12 22C12.34 22 12.68 21.98 13.01 21.95C13.05 21.95 13.09 21.94 13.13 21.93C13.42 21.9 13.7 21.86 13.98 21.8C14.05 21.79 14.12 21.76 14.2 21.75C14.44 21.69 14.69 21.64 14.92 21.56C15 21.53 15.08 21.5 15.16 21.48C15.38 21.4 15.61 21.33 15.82 21.24C15.9 21.21 15.98 21.17 16.06 21.13C16.27 21.04 16.48 20.94 16.69 20.83C16.77 20.79 16.84 20.74 16.91 20.7C17.11 20.58 17.31 20.47 17.51 20.34C17.58 20.3 17.64 20.25 17.71 20.2C17.91 20.06 18.1 19.92 18.28 19.77C18.34 19.72 18.39 19.67 18.45 19.63C18.56 19.54 18.67 19.45 18.77 19.36C18.77 19.35 18.77 19.35 18.76 19.34C20.75 17.51 22 14.9 22 12ZM16.94 16.97C14.23 15.15 9.79 15.15 7.06 16.97C6.62 17.26 6.26 17.6 5.96 17.97C4.44 16.43 3.5 14.32 3.5 12C3.5 7.31 7.31 3.5 12 3.5C16.69 3.5 20.5 7.31 20.5 12C20.5 14.32 19.56 16.43 18.04 17.97C17.75 17.6 17.38 17.26 16.94 16.97Z" fill="#292D32"></path> <path d="M12 6.92969C9.93 6.92969 8.25 8.60969 8.25 10.6797C8.25 12.7097 9.84 14.3597 11.95 14.4197C11.98 14.4197 12.02 14.4197 12.04 14.4197C12.06 14.4197 12.09 14.4197 12.11 14.4197C12.12 14.4197 12.13 14.4197 12.13 14.4197C14.15 14.3497 15.74 12.7097 15.75 10.6797C15.75 8.60969 14.07 6.92969 12 6.92969Z" fill="#292D32"></path> </g></svg>
+            <h3>{% block header %}Pantry Assistant{% endblock %}</h3>
+            <a href="{% url 'logout' %}">
+                <svg id="logout-btn" fill="#000000" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 384.971 384.971" xml:space="preserve"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g> <g id="Sign_Out"> <path d="M180.455,360.91H24.061V24.061h156.394c6.641,0,12.03-5.39,12.03-12.03s-5.39-12.03-12.03-12.03H12.03 C5.39,0.001,0,5.39,0,12.031V372.94c0,6.641,5.39,12.03,12.03,12.03h168.424c6.641,0,12.03-5.39,12.03-12.03 C192.485,366.299,187.095,360.91,180.455,360.91z"></path> <path d="M381.481,184.088l-83.009-84.2c-4.704-4.752-12.319-4.74-17.011,0c-4.704,4.74-4.704,12.439,0,17.179l62.558,63.46H96.279 c-6.641,0-12.03,5.438-12.03,12.151c0,6.713,5.39,12.151,12.03,12.151h247.74l-62.558,63.46c-4.704,4.752-4.704,12.439,0,17.179 c4.704,4.752,12.319,4.752,17.011,0l82.997-84.2C386.113,196.588,386.161,188.756,381.481,184.088z"></path> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> </g> </g></svg>
+            </a>
+            </header>
+        <nav>
+            <ul>
+                <li>
+                    <a href="{% url 'recipe_list' %}">
+                        <svg class="nav-icon" fill="#000000" height="200px" width="200px" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512" xml:space="preserve"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g> <g> <path d="M165.466,236.809H147.46c-13.677,0-24.803,11.128-24.803,24.804s11.127,24.804,24.803,24.804h18.006 c13.677,0,24.804-11.128,24.804-24.804S179.143,236.809,165.466,236.809z"></path> </g> </g> <g> <g> <path d="M299.065,79.806c-16.07,0-31.394,6.086-43.065,16.586c-11.671-10.499-26.994-16.586-43.065-16.586H60.834V371.36h390.332 V79.806H299.065z M101.45,134.332h110.027v30.417H101.45V134.332z M165.466,316.835H147.46c-30.449,0-55.22-24.773-55.22-55.221 c0-28.35,21.478-51.768,49.015-54.864v-22.438h30.417v22.438c27.537,3.095,49.015,26.514,49.015,54.864 C220.687,292.062,195.915,316.835,165.466,316.835z M410.551,316.835L410.551,316.835H300.524v-30.417h110.027V316.835z M410.551,266.14L410.551,266.14H300.524v-30.417h110.027V266.14z M410.551,215.444L410.551,215.444H300.524v-30.417h110.027 V215.444z M410.551,164.749L410.551,164.749H300.524v-30.417h110.027V164.749z"></path> </g> </g> <g> <g> <polygon points="481.583,98.153 481.583,401.777 30.417,401.777 30.417,98.153 0,98.153 0,432.194 0.001,432.194 512,432.194 512,98.153 "></polygon> </g> </g> </g></svg>
+                        <div>Recipes</div>
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'pantry_list' %}">
+                        <svg class="nav-icon" fill="#000000" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><path d="M21,2H20V8h2V3A1,1,0,0,0,21,2Z"></path><rect x="20" y="10" width="2" height="6"></rect><path d="M20,22h1a1,1,0,0,0,1-1V18H20Z"></path><path d="M2,21a1,1,0,0,0,1,1H18V18H2Z"></path><path d="M9,2H3A1,1,0,0,0,2,3V16H9ZM7,10a1,1,0,0,1-2,0V8A1,1,0,0,1,7,8Z"></path><path d="M11,16h7V2H11Zm2-8a1,1,0,0,1,2,0v2a1,1,0,0,1-2,0Z"></path></g></svg>
+                        <div>Pantry</div>
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'grocery_list' %}">
+                        <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M0 24C0 10.7 10.7 0 24 0H69.5c22 0 41.5 12.8 50.6 32h411c26.3 0 45.5 25 38.6 50.4l-41 152.3c-8.5 31.4-37 53.3-69.5 53.3H170.7l5.4 28.5c2.2 11.3 12.1 19.5 23.6 19.5H488c13.3 0 24 10.7 24 24s-10.7 24-24 24H199.7c-34.6 0-64.3-24.6-70.7-58.5L77.4 54.5c-.7-3.8-4-6.5-7.9-6.5H24C10.7 48 0 37.3 0 24zM128 464a48 48 0 1 1 96 0 48 48 0 1 1 -96 0zm336-48a48 48 0 1 1 0 96 48 48 0 1 1 0-96z"/></svg>
+                        <div>Grocery</div>
+                    </a>
+                </li>
+                <li>
+                    <a href="">
+                        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <circle cx="18" cy="12" r="1.5" transform="rotate(90 18 12)" fill="#080341"></circle> <circle cx="12" cy="12" r="1.5" transform="rotate(90 12 12)" fill="#080341"></circle> <circle cx="6" cy="12" r="1.5" transform="rotate(90 6 12)" fill="#080341"></circle> </g></svg>
+                        <div>More</div>
+                    </a>
+                </li>
+            </ul>
+        </nav> 
+        <main>
+            {% block content %}
+            {% endblock %}
+        </main>
+        
+            
+        <footer>
+            {% block footer %}Like & Subscribe on Facebook / Instagram{%endblock%}
+        </footer>
+    </div>   
+</body>
+</html>

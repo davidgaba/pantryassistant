@@ -1,0 +1,12 @@
+{% extends 'pantry/base.html' %}
+
+{% block content %}
+    <form method="POST">
+        {% csrf_token %}
+        <div>
+            {{register_form.as_p}}
+        </div>
+        <input class="btn btn-primary" type="submit" value="Register"/>
+        <p>Already registered? <a href="{% url 'login' %}">Sign in now</a></p>
+    </form>
+{% endblock %}

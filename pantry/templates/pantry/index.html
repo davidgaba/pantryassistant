@@ -1,0 +1,9 @@
+{% extends "pantry/base.html" %}
+
+{%block content%}
+<div class="account-t">
+    <a href="{% url 'login' %}" class="account-options">Log In</a>
+    <a href="{% url 'register' %}" class="account-options">Sign Up</a>
+</div>
+
+{%endblock%}
