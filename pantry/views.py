@@ -59,9 +59,27 @@ def logout(request):
 
     return redirect("login")
 
+
 @login_required(login_url='login')
 def recipe_list(request):
     return render(request, 'pantry/recipe_list.html')
+
+
+def fetch_recipes():
+    url = "https://api.spoonacular.com/recipes/random"
+    response = requests.get(url)
+
+    if response.status_code == 200:
+        return response.json().get('recipes', [])
+    else:
+        return []
+    
+
+def featured_recipes(request):
+    recipes = fetch_recipes()
+    return render(request, 'featured_recipes.html', {'recipes': recipes})
+
+
 
 @login_required(login_url='login')
 def pantry_list(request):
