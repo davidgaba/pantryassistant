@@ -9,10 +9,10 @@ class CreateUserForm(UserCreationForm):
     '''
         Create or register a user (Model Form)
     '''
-    first_name = forms.CharField(required=True)
-    last_name = forms.CharField(required=True)
-    username = forms.CharField(required=True)
-    email = forms.CharField(required=True)
+    first_name = forms.CharField(required=True, widget=TextInput(attrs={'class':'form-input', 'placeholder':'First Name'}), label='')
+    last_name = forms.CharField(required=True, widget=TextInput(attrs={'class':'form-input', 'placeholder':'Last Name'}), label='')
+    username = forms.CharField(required=True, widget=TextInput(attrs={'class':'form-input', 'placeholder':'Userame'}), label='')
+    email = forms.CharField(required=True, widget=TextInput(attrs={'class':'form-input', 'placeholder':'Email'}), label='')
 
     class Meta:
 
@@ -24,5 +24,5 @@ class LoginForm(AuthenticationForm):
     '''
         Authenticate a user (Model Form)
     '''
-    username = forms.CharField(required=True, widget=TextInput())
-    password = forms.CharField(required=True, widget=PasswordInput())
+    username = forms.CharField(required=True, widget=TextInput(attrs={'placeholder':'Username'}), label='')
+    password = forms.CharField(required=True, widget=PasswordInput(attrs={'placeholder':'Password'}), label='')

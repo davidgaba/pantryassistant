@@ -26,6 +26,12 @@
             color: #f2f2f2;
         }
 
+        .form-header{
+            font-size: 1.2rem;
+            font-weight: bolder;
+            text-align: left;
+        }
+
         form {
             display: flex;
             flex-direction: column;
@@ -37,13 +43,16 @@
             font-size: 0.8rem;
         }
 
-        form>p{
-            margin-top: 15px;
+        form p {
+            margin: 10px 0;            
+        }
+
+        form>p {
             text-align: center;
         }
 
-        .btn {
-            margin-top: 20px;
+        form>p:last-of-type {
+            margin-top: 35px;
         }
 
         footer {
@@ -54,13 +63,20 @@
             margin: auto;
         }
 
-        input {
-            width: 100%;
-        }
-
         label {
             font-weight: bold;
-            margin-bottom: 5px;
+            margin: 5px 0;
+        }
+
+        input {
+            width: 100%;
+            margin: 10px 0;
+            padding: 15px;
+            border-radius: 5px;
+        }
+
+        input.btn {
+            padding: 10px;
         }
 
         .errorlist {
@@ -76,11 +92,12 @@
         .fb-login, .google-login {
             display: flex;
             width: 100%;
-            border: 1px solid #424242;
             align-items: center;
+            border: 0.5px solid #a5a5a583;
             padding: 10px 0;
             border-radius: 10px;
             margin: 5px 0;
+            background-color: white;
         }
 
         .sso-icon {
@@ -103,24 +120,11 @@
             }
         }
 
-
-        @media (min-width: 750px) {
-            main {
-                width: 40%;
-            }
-        }
-
         @media (min-width: 900px) {
             main {
                 width: 30%;
             }
         }
-        
-
-
-
-
-
     </style>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">

@@ -6,6 +6,7 @@ from django.contrib.auth.models import auth
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 
+import requests
 
 # Create your views here.
 def home(request):
