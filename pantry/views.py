@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from .forms import CreateUserForm, LoginForm
+from django.db.models import Q
 
 # authenticate models and functions
 from django.contrib.auth.models import auth
@@ -15,6 +16,8 @@ import os
 
 load_dotenv()
 SPOONACULAR_KEY = os.environ.get('SPOONACULAR_KEY')
+
+
 
 
 # Create your views here.
@@ -69,35 +72,70 @@ def logout(request):
     return redirect("login")
 
 
-def fetch_random_recipes():
+
+
+def fetch_random_recipes(tags):
     url = "https://api.spoonacular.com/recipes/random"
 
     params = {
         "apiKey": SPOONACULAR_KEY,
-        "number": 1
+        "number": 20,
+        "include-tags": tags,
+        'limitLicense': 'true',
     }
     response = requests.get(url, params=params)
 
     if response.status_code == 200:
+
         recipes_data = response.json().get('recipes', [])
 
-        for recipe_data in recipes_data:
+        # Filter out recipes without images
+        recipes_with_images = [recipe for recipe in recipes_data if recipe.get('image')]
+
+        for recipe_data in recipes_with_images:
 
             Recipe.objects.get_or_create(
                 recipe_id = recipe_data['id'],
                 title = recipe_data['title'],
                 image = recipe_data['image'],
                 summary = recipe_data['summary'],
-                source_url = recipe_data['sourceUrl']
+                source_url = recipe_data['sourceUrl'],
+                dish_types = recipe_data['dishTypes'],
+                ingredients = recipe_data['extendedIngredients'],
+                favorite = False,
             )
+
+
+def fetch_recipes():
+    fetch_random_recipes(["main dish"])
+
+    fetch_random_recipes(["snack"])
+    fetch_random_recipes(["fingerfood"])
+    fetch_random_recipes(["appetizer"])
+    fetch_random_recipes(["side dish"])
+    
+    fetch_random_recipes(["beverage"])
+    fetch_random_recipes(["drinks"])
+    fetch_random_recipes(["dessert"])
 
 
 @login_required(login_url='login')
 def recipe_list(request):
-    # fetch_random_recipes()
-    recipes = Recipe.objects.order_by('?')[:7]
+    
+    # fetch_recipes()
+
+    recipes = Recipe.objects.order_by('?')[:10]
+    mains = Recipe.objects.filter(Q(dish_types__contains='main dish')).order_by('?')[:10]
+    snacks = Recipe.objects.filter(Q(dish_types__contains='snack') | Q(dish_types__contains='fingerfood') | Q(dish_types__contains='appetizer') | Q(dish_types__contains='side dish')).order_by('?')[:10]
+    beverages = Recipe.objects.filter(Q(dish_types__contains='beverage') | Q(dish_types__contains='drink')).order_by('?')[:10]
+    desserts = Recipe.objects.filter(Q(dish_types__contains='dessert')).order_by('?')[:10]
+
     context = {
-        'recipes': recipes
+        'recipes': recipes,
+        'mains' : mains,
+        'snacks': snacks,
+        'beverages' : beverages,
+        'desserts': desserts,
     }
     return render(request, 'pantry/recipe_list.html', context=context)    
 
