@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from .forms import CreateUserForm, LoginForm
 from django.db.models import Q
 
@@ -96,11 +96,14 @@ def fetch_random_recipes(tags):
 
             Recipe.objects.get_or_create(
                 recipe_id = recipe_data['id'],
-                title = recipe_data['title'],
+                title = recipe_data['title'].title(),
                 image = recipe_data['image'],
                 summary = recipe_data['summary'],
                 source_url = recipe_data['sourceUrl'],
                 dish_types = recipe_data['dishTypes'],
+                servings = recipe_data['servings'],
+                cook_time = recipe_data['readyInMinutes'],
+                instructions = recipe_data['instructions'],
                 ingredients = recipe_data['extendedIngredients'],
                 favorite = False,
             )
@@ -125,6 +128,7 @@ def recipe_list(request):
     # fetch_recipes()
 
     recipes = Recipe.objects.order_by('?')[:10]
+    new_recipes = Recipe.objects.order_by('?')[:10]
     mains = Recipe.objects.filter(Q(dish_types__contains='main dish')).order_by('?')[:10]
     snacks = Recipe.objects.filter(Q(dish_types__contains='snack') | Q(dish_types__contains='fingerfood') | Q(dish_types__contains='appetizer') | Q(dish_types__contains='side dish')).order_by('?')[:10]
     beverages = Recipe.objects.filter(Q(dish_types__contains='beverage') | Q(dish_types__contains='drink')).order_by('?')[:10]
@@ -132,12 +136,24 @@ def recipe_list(request):
 
     context = {
         'recipes': recipes,
+        'new_recipes': new_recipes,
         'mains' : mains,
         'snacks': snacks,
         'beverages' : beverages,
         'desserts': desserts,
     }
     return render(request, 'pantry/recipe_list.html', context=context)    
+
+@login_required(login_url='login')
+def recipe_detail_view(request, id):
+    
+    recipe = Recipe.objects.get(recipe_id=id)
+
+    context = {
+        'recipe': recipe
+    }
+    return render(request, 'pantry/recipe_detail.html', context=context)
+
 
 @login_required(login_url='login')
 def pantry_list(request):

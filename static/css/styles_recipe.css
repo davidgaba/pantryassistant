@@ -37,6 +37,7 @@
     }
 
     footer {
+        margin-top: 50px;
         padding-bottom: 180px;
     }
 
@@ -46,8 +47,8 @@
         display: flex;
         overflow: auto;
         column-gap: 15px;
-        background-color: #525252;
-        border-radius: 10px;
+        background-color: #a0a0a0;
+        border-radius: 15px;
         padding: 15px;
     }
 
@@ -62,7 +63,7 @@
         object-fit: cover;
         border-top-left-radius: 15px;
         border-top-right-radius: 15px;
-        background-color: rgb(121, 121, 121);
+        background-color: #797979;
     }
 
     .c-item p {
@@ -98,9 +99,18 @@
         margin-bottom: 50px;
     }
 
+    .section-header{
+        margin-bottom: 7.5px;
+    }
+    
+    .hidden {
+        display: none;
+    }
+
     @media (min-width: 500px) {
         .c-item img {
-            width: 325px;
-            height: 250px;
+            width: 250px;
+            height: 175px;
         }
     }
+

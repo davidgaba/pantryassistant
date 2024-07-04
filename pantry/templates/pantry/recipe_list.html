@@ -3,81 +3,95 @@
 {% load static %}
 
 {% block link %}
-    <link rel="stylesheet" href="{% static 'css/styles_recipe.css' %}" >
+    <link rel="stylesheet" href="{% static 'css/styles_recipe.css' %}" />
 {% endblock %}
 
 {% block title %} - Recipe {% endblock %}
 
 {% block content %}
 
-    <section>
-        <h3 class="header">My Recipes</h3>
+    <section {% if not recipes %}class="hidden"{% endif %}>
+        <h3 class="section-header">My Recipes</h3>
         <div class="carousel">
             {% for recipe in recipes %}
                 <div class="c-item">
-                    <img src="{{recipe.image}}" alt="Image of {{recipe.title}}">
-                    <p>{{recipe.title}}</p>
+                    <a href="{% url 'recipe_detail' recipe.recipe_id %}">
+                        <img src="{{recipe.image}}" alt="Image of {{recipe.title}}">
+                        <p>{{recipe.title}}</p>
+                    </a>
+                    
                 </div>
             {% endfor %}
         </div>
     </section>
 
-    <section>
-        <h3 class="header">What's New</h3>
+    <section {% if not new_recipes %}class="hidden"{% endif %}>
+        <h3 class="section-header">What's New</h3>
         <div class="carousel">
-            {% for recipe in recipes %}
+            {% for new_recipe in new_recipes %}
                 <div class="c-item">
-                    <img src="{{recipe.image}}" alt="Image of {{recipe.title}}">
-                    <p>{{recipe.title}}</p>
+                    <a href="{% url 'recipe_detail' new_recipe.recipe_id %}">
+                        <img src="{{new_recipe.image}}" alt="Image of {{new_recipes.title}}">
+                        <p>{{new_recipe.title}}</p>
+                    </a>
                 </div>
             {% endfor %}
         </div>
      
     </section>
 
-    <section>
-        <h3 class="header">Main Course</h3>
+    <section {% if not mains %}class="hidden"{% endif %}>
+        <h3 class="section-header">Main Course</h3>
         <div class="carousel">
             {% for main in mains %}
                 <div class="c-item">
-                    <img src="{{main.image}}" alt="Image of {{main.title}}">
-                    <p>{{main.title}}</p>
+                    <a href="{% url 'recipe_detail' main.recipe_id %}">
+                        <img src="{{main.image}}" alt="Image of {{main.title}}">
+                        <p>{{main.title}}</p>
+                    </a>
                 </div>
             {% endfor %}
         </div>
     </section>
 
-    <section>
-        <h3 class="header">Appetizer</h3>
+    <section {% if not snacks %}class="hidden"{% endif %}>
+        <h3 class="section-header">Appetizer</h3>
         <div class="carousel">
             {% for snack in snacks %}
                 <div class="c-item">
-                    <img src="{{snack.image}}" alt="Image of {{snack.title}}">
-                    <p>{{snack.title}}</p>
+                    <a href="{% url 'recipe_detail' snack.recipe_id %}">
+                        <img src="{{snack.image}}" alt="Image of {{snack.title}}">
+                        <p>{{snack.title}}</p>
+                    </a>
                 </div>
             {% endfor %}
         </div>
     </section>
 
-    <section>
-        <h3 class="header">Beverage</h3>
+    <section {% if not beverages %}class="hidden"{% endif %}>
+        <h3 class="section-header">Beverage</h3>
         <div class="carousel">
             {% for beverage in beverages %}
                 <div class="c-item">
-                    <img src="{{beverage.image}}" alt="Image of {{beverage.title}}">
-                    <p>{{beverage.title}}</p>
+                    <a href="{% url 'recipe_detail' beverage.recipe_id %}">
+                        <img src="{{beverage.image}}" alt="Image of {{beverage.title}}">
+                        <p>{{beverage.title}}</p>
+                    </a>
+
                 </div>
             {% endfor %}
         </div>
     </section>
 
-    <section>
-        <h3 class="header">Dessert</h3>
+    <section {% if not desserts %}class="hidden"{% endif %}>
+        <h3 class="section-header">Dessert</h3>
         <div class="carousel">
             {% for dessert in desserts %}
                 <div class="c-item">
-                    <img src="{{dessert.image}}" alt="Image of {{dessert.title}}">
-                    <p>{{dessert.title}}</p>
+                    <a href="{% url 'recipe_detail' dessert.recipe_id %}">
+                        <img src="{{dessert.image}}" alt="Image of {{dessert.title}}">
+                        <p>{{dessert.title}}</p>
+                    </a>
                 </div>
             {% endfor %}
         </div>
