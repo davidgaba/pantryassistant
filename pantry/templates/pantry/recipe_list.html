@@ -1,4 +1,6 @@
 <style>
+    /* Search bar styling */
+
     #search-form {
         display: flex;
         position: fixed;
@@ -39,16 +41,133 @@
         padding-bottom: 180px;
     }
 
+
+    /* Carousel styling */
+
+    .carousel {
+        position: relative;
+        width: 100%;
+        max-width: 1200px; /* Adjust as needed */
+        margin: 0;
+        overflow-x: auto;
+        padding: 0;
+    }
+
+    .carousel-container {
+        display: flex;
+        transition: transform 0.5s ease-in-out;
+        column-gap: 30px;
+    }
+
+    .c-item {
+        flex-basis: 2;
+        width: 500px;
+        box-sizing: border-box;
+
+    }
+
+    .c-item a {
+        width: 100%;
+        text-decoration: none;
+    }
+
+    .c-img {
+        width: 100dvw;
+        height: 200px;
+        display: block;
+    }
+
+    .c-text {
+        font-size: 0.8rem;
+        text-align: center;
+        background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+        color: white;
+        padding: 10px;
+        margin: 0;
+        height: 50px;
+    }
+
+    .next {
+        right: 0;
+        border-radius: 3px 0 0 3px;
+    }
+    .prev:hover, .next:hover {
+        background-color: rgba(0, 0, 0, 0.8);
+    }
+
+    /* Main body styling */
+
+    section:first-of-type {
+        margin: 0;
+        margin-top: 10px;
+    }
+
+    section:not(:first-of-type) {
+        margin: 0;
+        margin-top: 25px;
+    }
+
+    section h3 {
+        margin-bottom: 25px;
+    }
+
 </style>
+
+<script>
+    let currentIndex = 0;
+    const itemsPerPage = 4;
+    const totalItems = document.getElementsByClassName('carousel-item').length;
+    const container = document.querySelector('.carousel-container');
+
+    function updateCarousel() {
+        const offset = -currentIndex * (100 / itemsPerPage); // Adjust offset calculation for margins
+        container.style.transform = `translateX(${offset}%)`;
+    }
+
+    function changeSlide(n) {
+        currentIndex += n;
+        if (currentIndex < 0) {
+            currentIndex = 0;
+        } else if (currentIndex > totalItems - itemsPerPage) {
+            currentIndex = totalItems - itemsPerPage;
+        }
+        updateCarousel();
+    }
+
+    // Optional: Auto-slide functionality
+    setInterval(() => {
+        changeSlide(1);
+    }, 5000); // Change slide every 5 seconds
+</script>
 
 {% extends "pantry/authenticated_base.html" %}
 
 {% block title %} - Recipe {% endblock %}
 
 {% block content %}
-    <h3>What's New</h3>
 
-    <h3>My Recipes</h3>
+    <section>
+        <h3>What's New</h3>
+        
+        <div class="carousel">
+            <div class="carousel-container">
+                {% for recipe in recipes %}
+                    <div class="c-item">
+                        <a href="{{recipe.source_url}}">
+                            <img class="c-img" src="{{recipe.image}}" alt="Image of {{recipe.title}}">
+                            <p class="c-text">{{ recipe.title }}</p>
+                        </a>
+                    </div>
+                {% endfor %}
+            </div>
+            <!-- <a class="prev" onclick="changeSlide(-1)">&#10094;</a>
+            <a class="next" onclick="changeSlide(1)">&#10095;</a> -->
+        </div>
+    </section>
+
+    <section>
+        <h3 class="header">My Recipes</h3>
+    </section>
 
     <form action="" method="POST">
         {% csrf_token %}

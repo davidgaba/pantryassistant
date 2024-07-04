@@ -6,7 +6,16 @@ from django.contrib.auth.models import auth
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 
+from .models import Recipe
+
 import requests
+
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
+SPOONACULAR_KEY = os.environ.get('SPOONACULAR_KEY')
+
 
 # Create your views here.
 def home(request):
@@ -60,26 +69,37 @@ def logout(request):
     return redirect("login")
 
 
-@login_required(login_url='login')
-def recipe_list(request):
-    return render(request, 'pantry/recipe_list.html')
-
-
-def fetch_recipes():
+def fetch_random_recipes():
     url = "https://api.spoonacular.com/recipes/random"
-    response = requests.get(url)
+
+    params = {
+        "apiKey": SPOONACULAR_KEY,
+        "number": 1
+    }
+    response = requests.get(url, params=params)
 
     if response.status_code == 200:
-        return response.json().get('recipes', [])
-    else:
-        return []
-    
+        recipes_data = response.json().get('recipes', [])
 
-def featured_recipes(request):
-    recipes = fetch_recipes()
-    return render(request, 'featured_recipes.html', {'recipes': recipes})
+        for recipe_data in recipes_data:
+
+            Recipe.objects.get_or_create(
+                recipe_id = recipe_data['id'],
+                title = recipe_data['title'],
+                image = recipe_data['image'],
+                summary = recipe_data['summary'],
+                source_url = recipe_data['sourceUrl']
+            )
 
 
+@login_required(login_url='login')
+def recipe_list(request):
+    # fetch_random_recipes()
+    recipes = Recipe.objects.order_by('?')[:7]
+    context = {
+        'recipes': recipes
+    }
+    return render(request, 'pantry/recipe_list.html', context=context)    
 
 @login_required(login_url='login')
 def pantry_list(request):
