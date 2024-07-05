@@ -4,6 +4,8 @@ from django.contrib.auth.models import User
 from django import forms
 from django.forms.widgets import PasswordInput, TextInput
 
+from .models import PantryItem
+
 
 class CreateUserForm(UserCreationForm):
     '''
@@ -26,3 +28,12 @@ class LoginForm(AuthenticationForm):
     '''
     username = forms.CharField(required=True, widget=TextInput(attrs={'placeholder':'Username'}), label='')
     password = forms.CharField(required=True, widget=PasswordInput(attrs={'placeholder':'Password'}), label='')
+
+
+class PantryItemForm(forms.ModelForm):
+    '''
+        Add a pantry item (Model Form)
+    '''
+    class Meta:
+        model = PantryItem
+        fields = ['name', 'quantity', 'expiration_date']

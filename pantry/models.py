@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 from jsonfield import JSONField
 
 # Create your models here.
@@ -18,3 +19,13 @@ class Recipe(models.Model):
 
     def __str__(self):
         return self.title
+    
+
+class PantryItem(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    name = models.CharField(max_length=100)
+    quantity = models.IntegerField(default=1)
+    expiration_date = models.DateField(null=True, blank=True)
+
+    def __str__(self):
+        return self.name

@@ -37,7 +37,6 @@
     }
 
     footer {
-        margin-top: 50px;
         padding-bottom: 180px;
     }
 
@@ -46,15 +45,19 @@
     .carousel {
         display: flex;
         overflow: auto;
-        column-gap: 15px;
-        background-color: #a0a0a0;
-        border-radius: 15px;
-        padding: 15px;
+        column-gap: 35px;
+        padding-top: 15px;
+        padding-bottom: 15px;
+        border-radius: 10px;
     }
 
     .c-item {
         display: flex;
         flex-direction: column;
+    }
+
+    .c-item a {
+        text-decoration: none;
     }
 
     .c-item img {
@@ -63,32 +66,52 @@
         object-fit: cover;
         border-top-left-radius: 15px;
         border-top-right-radius: 15px;
-        background-color: #797979;
+        background-color: #f0f0f093;
     }
 
-    .c-item p {
-        text-align: center;
-        background-color: #30303093;
-        color: white;
-        height: 120px;
-        align-content: center;
-        padding: 0px 5px;
+    .c-meta-data {
+        border-bottom-left-radius: 15px;
+        border-bottom-right-radius: 15px;
+        background-color: #adadad93;
+        padding: 25px;
+        margin-top: 10px;
+        color: #555555;
+    }
+
+    .c-meta-data>p {
+        font-weight: bolder;
+        font-size: 1.2rem;
+        color: #052874;
+    }
+
+    .md-icon {
+        width: 20px;
+        height: 20px;
+    }
+
+    .cook-time .md-icon {
+        filter: invert(0.4);
+    }
+
+    .md-item {
+        display: flex;
+        align-items: center;
+    }
+
+    .md-item p {
         margin: 0;
-        font-size: 0.85rem;
-        border-bottom-left-radius: 10px;
-        border-bottom-right-radius: 10px;
+        margin-left: 5px;
     }
 
     /* Main body styling */
 
-    section:first-of-type {
+    section {
+        padding: 15px;
         margin: 0;
-        margin-top: 10px;
     }
 
-    section:not(:first-of-type) {
-        margin: 0;
-        margin-top: 25px;
+    section:first-of-type {
+        margin-top: 5px;
     }
 
     section h3 {
@@ -101,6 +124,8 @@
 
     .section-header{
         margin-bottom: 7.5px;
+        padding-bottom: 5px;
+        border-bottom: 1px solid rgb(75, 75, 75);
     }
     
     .hidden {

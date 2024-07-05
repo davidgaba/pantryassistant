@@ -1,9 +1,14 @@
 {% extends "pantry/authenticated_base.html" %}
 
-{% block content %}
-<form action="" method="POST">
-    {% csrf_token %}
-    <button>Generate Grocery List</button>
-</form>
+{% load static %}
 
+{% block link %}
+    <link rel="stylesheet" href="{% static 'css/styles_pantry.css' %}">
+{% endblock %}
+
+{% block content %}
+    <form action="" method="POST">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-primary">Generate Grocery List</button>
+    </form>
 {% endblock %}

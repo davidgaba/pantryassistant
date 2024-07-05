@@ -1,13 +1,12 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .forms import CreateUserForm, LoginForm
+from .forms import CreateUserForm, LoginForm, PantryItemForm
+from .models import Recipe, PantryItem
 from django.db.models import Q
 
 # authenticate models and functions
 from django.contrib.auth.models import auth
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-
-from .models import Recipe
 
 import requests
 
@@ -16,8 +15,6 @@ import os
 
 load_dotenv()
 SPOONACULAR_KEY = os.environ.get('SPOONACULAR_KEY')
-
-
 
 
 # Create your views here.
@@ -70,8 +67,6 @@ def logout(request):
     auth.logout(request)
 
     return redirect("login")
-
-
 
 
 def fetch_random_recipes(tags):
@@ -144,6 +139,7 @@ def recipe_list(request):
     }
     return render(request, 'pantry/recipe_list.html', context=context)    
 
+
 @login_required(login_url='login')
 def recipe_detail_view(request, id):
     
@@ -157,7 +153,25 @@ def recipe_detail_view(request, id):
 
 @login_required(login_url='login')
 def pantry_list(request):
-    return render(request, 'pantry/pantry.html')
+
+    form = PantryItemForm()
+
+    if request.method == "POST":
+
+        form = PantryItemForm(request.POST)
+
+        if form.is_valid():
+            form.save()
+            return redirect('pantry_list')
+
+    pantry_items = PantryItem.objects.filter(user=request.user)
+    context = {
+        'form' : form,
+        'pantry_items' : pantry_items,
+    }
+    return render(request, 'pantry/pantry.html', context=context)
+
+
 
 @login_required(login_url='login')
 def grocery_list(request):
