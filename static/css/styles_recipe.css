@@ -42,6 +42,7 @@
 
 
     /* Carousel styling */
+    
     .carousel {
         display: flex;
         overflow: auto;
@@ -54,6 +55,7 @@
     .c-item {
         display: flex;
         flex-direction: column;
+        max-height: 100%;
     }
 
     .c-item a {
@@ -72,15 +74,15 @@
     .c-meta-data {
         border-bottom-left-radius: 15px;
         border-bottom-right-radius: 15px;
-        background-color: #adadad93;
+        background-color: #f0f0f0;
         padding: 25px;
         margin-top: 10px;
         color: #555555;
+        font-size: 0.8rem;
     }
 
     .c-meta-data>p {
         font-weight: bolder;
-        font-size: 1.2rem;
         color: #052874;
     }
 

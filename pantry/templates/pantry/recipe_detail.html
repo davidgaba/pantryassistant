@@ -10,8 +10,27 @@
 {% block title %} - Recipe Detail {% endblock %}
 
 {% block content %}
-    <h3>{{recipe.title}}</h3>
-    <img src="{{recipe.image}}" alt="Image of {{recipe.title}}">
-    <br>
-    <p>{{recipe.summary|safe}}</p>
+    <section>
+        <h3>{{recipe.title}}</h3>
+        <img src="{{recipe.image}}" alt="Image of {{recipe.title}}">
+        <p>{{recipe.summary|safe}}</p>
+    </section>
+
+    <section>
+        <h3>Ingredients</h3>
+        <div class="ingredients-container">
+            {% for ingredient in recipe.ingredients %}
+                <p>{{ingredient.original}}</p>
+            {% endfor %}
+        </div>
+    </section>
+
+    <section>
+        <h3>How to cook '{{recipe.title}}'</h3>
+        <div class="instructions-container">
+            {{recipe.steps}}
+        </div>
+    </section>
+
+
 {% endblock %}

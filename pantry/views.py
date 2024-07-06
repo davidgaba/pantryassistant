@@ -82,10 +82,12 @@ def fetch_random_recipes(tags):
 
     if response.status_code == 200:
 
+        # Get recipes
         recipes_data = response.json().get('recipes', [])
 
         # Filter out recipes without images
         recipes_with_images = [recipe for recipe in recipes_data if recipe.get('image')]
+
 
         for recipe_data in recipes_with_images:
 
@@ -98,7 +100,7 @@ def fetch_random_recipes(tags):
                 dish_types = recipe_data['dishTypes'],
                 servings = recipe_data['servings'],
                 cook_time = recipe_data['readyInMinutes'],
-                instructions = recipe_data['instructions'],
+                instructions = recipe_data['analyzedInstructions'],
                 ingredients = recipe_data['extendedIngredients'],
                 favorite = False,
             )
@@ -146,7 +148,7 @@ def recipe_detail_view(request, id):
     recipe = Recipe.objects.get(recipe_id=id)
 
     context = {
-        'recipe': recipe
+        'recipe': recipe,
     }
     return render(request, 'pantry/recipe_detail.html', context=context)
 

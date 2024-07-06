@@ -2,6 +2,12 @@ main {
     padding-top: 30px;
 }
 
+img {
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+
 footer {
     padding-bottom: 110px;
 }
