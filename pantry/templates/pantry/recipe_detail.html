@@ -32,17 +32,10 @@
         <h3>How to cook '{{recipe.title}}'</h3>
         <div class="instructions-container">
             <ol>
-                {% for instruction in recipe.instructions %}
-                    {% with steps=instruction.steps %}
-                        {% for step in steps %}
-                            <li>{{ step.step }}</li>
-                        {% endfor %}
-                    {% endwith %}
+                {% for step in steps %}
+                    <li>{{step.step}}</li>
                 {% endfor %}
             </ol>
-            
         </div>
     </section>
-
-
 {% endblock %}

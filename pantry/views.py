@@ -153,7 +153,7 @@ def recipe_list(request):
 def recipe_detail_view(request, id):
     
     recipe = Recipe.objects.get(recipe_id=id)
-    steps = recipe.instructions[0]
+    steps = recipe.instructions[0].get('steps')
 
     context = {
         'recipe': recipe,
