@@ -13,7 +13,7 @@ class Recipe(models.Model):
     dish_types = models.TextField(default='')
     servings = models.IntegerField(default=1)
     cook_time = models.IntegerField(default=0)
-    instructions = models.TextField(default='')
+    instructions = JSONField(default='')
     ingredients = JSONField(default='')
     favorite = models.BooleanField(default=False)
 
@@ -26,6 +26,7 @@ class PantryItem(models.Model):
     name = models.CharField(max_length=100)
     quantity = models.IntegerField(default=1)
     expiration_date = models.DateField(null=True, blank=True)
+    in_stock = models.BooleanField(default=False)
 
     def __str__(self):
         return self.name

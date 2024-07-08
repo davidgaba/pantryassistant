@@ -11,24 +11,36 @@
 
 {% block content %}
     <section>
-        <h3>{{recipe.title}}</h3>
+        <h2>{{recipe.title}}</h2>
         <img src="{{recipe.image}}" alt="Image of {{recipe.title}}">
-        <p>{{recipe.summary|safe}}</p>
+        <p id="summary-text">{{recipe.summary|safe}}</p>
     </section>
 
     <section>
         <h3>Ingredients</h3>
         <div class="ingredients-container">
-            {% for ingredient in recipe.ingredients %}
-                <p>{{ingredient.original}}</p>
-            {% endfor %}
+            <ul>
+                {% for ingredient in recipe.ingredients %}
+                    <li>{{ingredient.original}}</li>
+                {% endfor %}
+            </ul>
+
         </div>
     </section>
 
     <section>
         <h3>How to cook '{{recipe.title}}'</h3>
         <div class="instructions-container">
-            {{recipe.steps}}
+            <ol>
+                {% for instruction in recipe.instructions %}
+                    {% with steps=instruction.steps %}
+                        {% for step in steps %}
+                            <li>{{ step.step }}</li>
+                        {% endfor %}
+                    {% endwith %}
+                {% endfor %}
+            </ol>
+            
         </div>
     </section>
 

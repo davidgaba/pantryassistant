@@ -5,10 +5,11 @@ from django.db.models import Q
 
 # authenticate models and functions
 from django.contrib.auth.models import auth
-from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth import authenticate
 from django.contrib.auth.decorators import login_required
 
 import requests
+import json
 
 from dotenv import load_dotenv
 import os
@@ -69,12 +70,18 @@ def logout(request):
     return redirect("login")
 
 
+
+def get_analyzed_instructions(id):
+    url = f"https://api.spoonacular.com/recipes/{id}/analyzedInstructions"
+   
+
+
 def fetch_random_recipes(tags):
     url = "https://api.spoonacular.com/recipes/random"
 
     params = {
         "apiKey": SPOONACULAR_KEY,
-        "number": 20,
+        "number": 3,
         "include-tags": tags,
         'limitLicense': 'true',
     }
@@ -146,9 +153,11 @@ def recipe_list(request):
 def recipe_detail_view(request, id):
     
     recipe = Recipe.objects.get(recipe_id=id)
+    steps = recipe.instructions[0]
 
     context = {
         'recipe': recipe,
+        'steps' : steps,
     }
     return render(request, 'pantry/recipe_detail.html', context=context)
 

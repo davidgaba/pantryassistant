@@ -10,7 +10,7 @@
         background-color: #052874;
         border-top-left-radius: 25px;
         border-top-right-radius: 25px;
-        padding: 30px 0 20px;
+        padding: 15px 0 20px;
     }
 
     #search-recipe {
@@ -36,9 +36,12 @@
         height: 25px;
     }
 
+
+
     footer {
         padding-bottom: 180px;
     }
+
 
 
     /* Carousel styling */
@@ -79,6 +82,7 @@
         margin-top: 10px;
         color: #555555;
         font-size: 0.8rem;
+        text-wrap: wrap;
     }
 
     .c-meta-data>p {

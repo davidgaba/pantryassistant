@@ -1,5 +1,9 @@
 main {
-    padding-top: 30px;
+    padding-top: 15px;
+}
+
+section {
+    margin-top: 20px;
 }
 
 img {
@@ -7,6 +11,10 @@ img {
     margin-bottom: 20px;
 }
 
+h3 {
+    margin: 10px 0;
+    border-bottom: 2px solid #8aacf591;
+}
 
 footer {
     padding-bottom: 110px;
@@ -16,8 +24,8 @@ p {
     padding: 0 5px;
 }
 
-h3 {
-    border-bottom: 1px solid red;
+li {
+    margin: 15px 5px;
 }
 
 @media (min-width: 600px) {
@@ -28,7 +36,6 @@ h3 {
     img {
         width: 100%;
         height: auto;
-        margin: auto;
     }
 }
 
