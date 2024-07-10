@@ -6,28 +6,23 @@
     <link rel="stylesheet" href="{% static 'css/styles_pantry.css' %}">
 {% endblock %}
 
-<!-- <style>
-    .hidden-form {
-        display: none;
-    }
-</style>
-<script>
-    function showForm() {
-        document.getElementById("add-item-form").classList.remove("hidden-form");
-        document.getElementById("add-item-button").style.display = "none";
-    }
-</script> -->
-
 {% block content %}
 
+
     <h2>Your Pantry Items:</h2>
-    <div id="pantry-container">
-        <ul>
-            {% for pantry_item in pantry_items %}
-                <li>{{pantry_item}}</li>
-            {% endfor %}
-        </ul> 
-    </div>
+    <form action="#" method="POST">
+        <div id="pantry-container">
+            <ul>
+                {% for pantry_item in pantry_items %}
+                    <li>{{pantry_item}}</li>
+                {% endfor %}
+            </ul> 
+        </div>
+
+        <button class="btn btn-success" type="submit">Save</button>
+        <button class="btn btn-success" type="submit">Add Item</button>
+    </form>
+
 
 
 

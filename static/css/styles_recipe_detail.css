@@ -17,14 +17,14 @@ h3 {
 }
 
 footer {
-    padding-bottom: 110px;
+    padding-bottom: 100px;
 }
 
 p {
     padding: 0 5px;
 }
 
-li {
+.ingredients-container li, .instructions-container li {
     margin: 15px 5px;
 }
 

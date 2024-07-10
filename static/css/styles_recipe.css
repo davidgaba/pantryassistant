@@ -3,7 +3,7 @@
     #search-form {
         display: flex;
         position: fixed;
-        bottom: 70px;
+        bottom: 60px;
         left: 0;
         width: 100%;
         justify-content: center;
@@ -39,9 +39,8 @@
 
 
     footer {
-        padding-bottom: 180px;
+        padding-bottom: 150px;
     }
-
 
 
     /* Carousel styling */
@@ -49,7 +48,8 @@
     .carousel {
         display: flex;
         overflow: auto;
-        column-gap: 35px;
+        column-gap: 25px;
+        padding-left: 7.5px;
         padding-top: 15px;
         padding-bottom: 15px;
         border-radius: 10px;
@@ -58,6 +58,7 @@
     .c-item {
         display: flex;
         flex-direction: column;
+        width: 100vw;
         max-height: 100%;
     }
 

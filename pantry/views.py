@@ -106,7 +106,7 @@ def fetch_random_recipes(tags):
                     break
 
             if recipe_data['spoonacularScore'] > 80:
-                
+
                 Recipe.objects.get_or_create(
                     recipe_id = recipe_data['id'],
                     title = recipe_data['title'].title(),
