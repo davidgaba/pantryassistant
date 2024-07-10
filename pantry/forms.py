@@ -30,10 +30,13 @@ class LoginForm(AuthenticationForm):
     password = forms.CharField(required=True, widget=PasswordInput(attrs={'placeholder':'Password'}), label='')
 
 
-class PantryItemForm(forms.ModelForm):
-    '''
-        Add a pantry item (Model Form)
-    '''
-    class Meta:
-        model = PantryItem
-        fields = ['name', 'quantity', 'expiration_date']
+# class PantryItemForm(forms.ModelForm):
+#     '''
+#         Add a pantry item (Model Form)
+#     '''
+#     class Meta:
+#         model = PantryItem
+#         fields = ['name', 'quantity', 'expiration_date']
+#         widgets = {
+#             'expiration_date' : forms.DateInput(attrs={'type':'date'}),
+#         }

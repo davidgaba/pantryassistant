@@ -1,7 +1,8 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .forms import CreateUserForm, LoginForm, PantryItemForm
+from .forms import CreateUserForm, LoginForm#, #PantryItemForm
 from .models import Recipe, PantryItem
 from django.db.models import Q
+from django.contrib.auth.models import User
 
 # authenticate models and functions
 from django.contrib.auth.models import auth
@@ -71,17 +72,12 @@ def logout(request):
 
 
 
-def get_analyzed_instructions(id):
-    url = f"https://api.spoonacular.com/recipes/{id}/analyzedInstructions"
-   
-
-
 def fetch_random_recipes(tags):
     url = "https://api.spoonacular.com/recipes/random"
 
     params = {
         "apiKey": SPOONACULAR_KEY,
-        "number": 3,
+        "number": 50,
         "include-tags": tags,
         'limitLicense': 'true',
     }
@@ -95,22 +91,35 @@ def fetch_random_recipes(tags):
         # Filter out recipes without images
         recipes_with_images = [recipe for recipe in recipes_data if recipe.get('image')]
 
-
         for recipe_data in recipes_with_images:
 
-            Recipe.objects.get_or_create(
-                recipe_id = recipe_data['id'],
-                title = recipe_data['title'].title(),
-                image = recipe_data['image'],
-                summary = recipe_data['summary'],
-                source_url = recipe_data['sourceUrl'],
-                dish_types = recipe_data['dishTypes'],
-                servings = recipe_data['servings'],
-                cook_time = recipe_data['readyInMinutes'],
-                instructions = recipe_data['analyzedInstructions'],
-                ingredients = recipe_data['extendedIngredients'],
-                favorite = False,
-            )
+            # Start phrase to cut off from spoonacular summary
+            cutoff_phrases = ["Similar recipes", "Users who liked this recipe also liked", "If you like this recipe,", "Try <a", "<a"]
+
+            summary = recipe_data['summary']
+
+            for phrase in cutoff_phrases:
+                cutoff_index = summary.find(phrase)
+
+                if cutoff_index != -1:
+                    summary = summary[:cutoff_index]
+                    break
+
+            if recipe_data['spoonacularScore'] > 80:
+                
+                Recipe.objects.get_or_create(
+                    recipe_id = recipe_data['id'],
+                    title = recipe_data['title'].title(),
+                    image = recipe_data['image'],
+                    summary = summary,
+                    source_url = recipe_data['sourceUrl'],
+                    dish_types = recipe_data['dishTypes'],
+                    servings = recipe_data['servings'],
+                    cook_time = recipe_data['readyInMinutes'],
+                    instructions = recipe_data['analyzedInstructions'],
+                    ingredients = recipe_data['extendedIngredients'],
+                    favorite = False,
+                )
 
 
 def fetch_recipes():
@@ -164,24 +173,13 @@ def recipe_detail_view(request, id):
 
 @login_required(login_url='login')
 def pantry_list(request):
+    pantry_items = PantryItem.objects.all()
 
-    form = PantryItemForm()
-
-    if request.method == "POST":
-
-        form = PantryItemForm(request.POST)
-
-        if form.is_valid():
-            form.save()
-            return redirect('pantry_list')
-
-    pantry_items = PantryItem.objects.filter(user=request.user)
     context = {
-        'form' : form,
-        'pantry_items' : pantry_items,
+        'pantry_items': pantry_items, 
     }
-    return render(request, 'pantry/pantry.html', context=context)
 
+    return render(request, 'pantry/pantry.html', context=context)
 
 
 @login_required(login_url='login')

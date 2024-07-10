@@ -6,15 +6,34 @@
     <link rel="stylesheet" href="{% static 'css/styles_pantry.css' %}">
 {% endblock %}
 
-{% block content %}
-    <form action="" method="POST">
-        {% csrf_token %}
-        <button type="submit" class="btn btn-primary">Save</button>
-        <button type="submit" class="btn btn-primary">Options</button>
-    </form>
+<!-- <style>
+    .hidden-form {
+        display: none;
+    }
+</style>
+<script>
+    function showForm() {
+        document.getElementById("add-item-form").classList.remove("hidden-form");
+        document.getElementById("add-item-button").style.display = "none";
+    }
+</script> -->
 
-    <form action="" method="POST">
-        {% csrf_token %}
-        <button type="submit" class="btn btn-primary">Generate Grocery List</button>
-    </form>
+{% block content %}
+
+    <h2>Your Pantry Items:</h2>
+    <div id="pantry-container">
+        <ul>
+            {% for pantry_item in pantry_items %}
+                <li>{{pantry_item}}</li>
+            {% endfor %}
+        </ul> 
+    </div>
+
+
+
+
+
+
+    <button type="submit" class="btn btn-primary">Generate Grocery List</button>
+
 {% endblock %}
