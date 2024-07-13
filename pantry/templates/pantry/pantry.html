@@ -4,31 +4,65 @@
 
 {% block link %}
     <link rel="stylesheet" href="{% static 'css/styles_pantry.css' %}">
+    <script src="{%static 'js/main.js' %}"></script>
 {% endblock %}
 
 {% block content %}
-
-
-    <h2>Your Pantry Items:</h2>
-    <form action="#" method="POST">
+    {%if pantry_items %}<h2>My Pantry:</h2>{% endif %}
+    <form id="pantry-list-form" action="#" method="POST">
+        {% csrf_token %}
+        <div id="save-container">
+            <button id="save-btn" class="btn btn-outline-success" type="submit">Save</button>
+        </div>
         <div id="pantry-container">
-            <ul>
-                {% for pantry_item in pantry_items %}
-                    <li>{{pantry_item}}</li>
-                {% endfor %}
-            </ul> 
+            {%if pantry_items %}
+                <div id="pantry-list-container">
+                    <div class="pantry-list-header">
+                        <div>Description</div>
+                        <div>In Stock</div>
+                        <div>Edit</div> 
+                        <div>Delete</div>
+                    </div>
+                    <ul>
+                        {% for pantry_item in pantry_items %}
+                            <div class="pantry-item-container">
+                                <li>{{pantry_item.name|title}}</li>
+                                <input type="checkbox">
+                                <button class="edit btn" type="submit">
+                                    <svg class="pantry-item-controls" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path fill-rule="evenodd" clip-rule="evenodd" d="M8.56078 20.2501L20.5608 8.25011L15.7501 3.43945L3.75012 15.4395V20.2501H8.56078ZM15.7501 5.56077L18.4395 8.25011L16.5001 10.1895L13.8108 7.50013L15.7501 5.56077ZM12.7501 8.56079L15.4395 11.2501L7.93946 18.7501H5.25012L5.25012 16.0608L12.7501 8.56079Z" fill="#080341"></path> </g></svg>
+                                </button>
+                                <button class="delete btn" type="submit">
+                                    <svg class="pantry-item-controls" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M10 12V17" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> <path d="M14 12V17" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> <path d="M4 7H20" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> <path d="M6 10V18C6 19.6569 7.34315 21 9 21H15C16.6569 21 18 19.6569 18 18V10" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> <path d="M9 5C9 3.89543 9.89543 3 11 3H13C14.1046 3 15 3.89543 15 5V7H9V5Z" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
+                                </button>
+                            </div>
+                        {% endfor %}
+                    </ul> 
+                </div> 
+            {% else %}
+                <p id="zero-item-message">You have <span style="font-size: 1.3rem;">0</span> items in your pantry. Select the "Add Item" button.</p>
+            {% endif %}
+        </div>        
+    </form>
+    
+    <button id="add-item-btn" class="btn btn-light" type="submit">Add an Item</button>
+
+    <form id="add-item-form" action="#" method="POST">
+        {% csrf_token %}
+        <hr>
+        <h3>New Item</h3>
+        {{new_item_form.as_p}}
+        <div id="new-item-controls">
+            <button class="btn btn-success" type="submit" name="addItem" value="addItem">Add</button>
+            <button id="cancelAddItem" class="btn btn-success" type="submit" name="cancel" value="cancel">Cancel</button>
         </div>
 
-        <button class="btn btn-success" type="submit">Save</button>
-        <button class="btn btn-success" type="submit">Add Item</button>
+        <hr>
     </form>
 
-
-
-
-
-
-
-    <button type="submit" class="btn btn-primary">Generate Grocery List</button>
+    <div class="pantry-controls">
+        <button id="generate-btn" type="submit" class="btn btn-success">Search recipes using pantry items</button>  
+        <button id="generate-btn" type="submit" class="btn btn-success">Generate grocery list</button>   
+    </div>
+         
 
 {% endblock %}

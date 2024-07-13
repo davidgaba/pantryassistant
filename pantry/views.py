@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .forms import CreateUserForm, LoginForm#, #PantryItemForm
+from .forms import CreateUserForm, LoginForm, NewPantryItemForm
 from .models import Recipe, PantryItem
 from django.db.models import Q
 from django.contrib.auth.models import User
@@ -173,9 +173,24 @@ def recipe_detail_view(request, id):
 
 @login_required(login_url='login')
 def pantry_list(request):
-    pantry_items = PantryItem.objects.all()
+
+    if request.method == 'POST':
+        new_item_form = NewPantryItemForm(request.POST)
+
+        if new_item_form.is_valid():
+            new_item = new_item_form.save(commit=False)
+            new_item.user = request.user  # Set the user before saving
+            new_item.save()
+            return redirect('pantry_list')  # Redirect to the same view after saving
+        else:
+            pass
+    else:
+        new_item_form = NewPantryItemForm()
+
+    pantry_items = PantryItem.objects.filter(user=request.user)
 
     context = {
+        'new_item_form' : NewPantryItemForm(),
         'pantry_items': pantry_items, 
     }
 

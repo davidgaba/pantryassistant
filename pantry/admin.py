@@ -3,3 +3,4 @@ from .models import Recipe, PantryItem
 
 # Register your models here.
 admin.site.register(Recipe)
+admin.site.register({PantryItem})
