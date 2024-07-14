@@ -29,4 +29,4 @@ class PantryItem(models.Model):
     expiration_date = models.DateField(blank=True, null=True)
     
     def __str__(self):
-        return f"{self.name} - {self.quantity}"
+        return f"({self.user}): {self.name.title()} - {0 if self.quantity is None else 0} "

@@ -12,7 +12,7 @@
     <form id="pantry-list-form" action="#" method="POST">
         {% csrf_token %}
         <div id="save-container">
-            <button id="save-btn" class="btn btn-outline-success" type="submit" disabled>Save</button>
+            <button id="save-btn" class="btn btn-outline-success" type="submit" name="save" value="save">Save</button>
         </div>
         <div id="pantry-container">
             {%if pantry_items %}

@@ -182,8 +182,9 @@ def pantry_list(request):
             new_item.user = request.user  # Set the user before saving
             new_item.save()
             return redirect('pantry_list')  # Redirect to the same view after saving
-        else:
-            pass
+        elif request.POST.get("save"):
+            
+            return redirect('pantry_list')
     else:
         new_item_form = NewPantryItemForm()
 
