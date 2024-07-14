@@ -1,7 +1,7 @@
 {% extends 'pantry/base.html' %}
 
 {% block content %}
-    <form method="POST">
+    <form method="POST" autocomplete="off">
         {% csrf_token %}
         <p class="form-header">Register An Account</p>
         <div>
@@ -9,7 +9,7 @@
         </div>
         <input class="btn btn-primary" type="submit" value="Register"/>
         
-        <p>or</p>
+        <p id="p-or">or</p>
 
         <div class="sso-container">
             <button class="google-login" type="button">

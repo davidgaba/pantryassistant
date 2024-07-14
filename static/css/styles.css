@@ -30,20 +30,32 @@ form {
     margin-top: 35px;
 }
 
+.login-input {
+    margin: 10px 0;
+}
+
 .helptext, form li, form>p {
     font-size: 0.8rem;
 }
 
 form p {
-    margin: 10px 0;            
+    margin: 0;            
 }
 
 form>p {
     text-align: center;
 }
 
+#p-or {
+    margin: 20px auto;
+}
+
 form>p:last-of-type {
     margin-top: 35px;
+}
+
+form div ul {
+    margin: 10px 0 0;
 }
 
 footer {
@@ -55,8 +67,14 @@ footer {
 }
 
 label {
+    position: relative;
+    top: 15px;
+    left: 20px;
     font-weight: bold;
     margin: 5px 0;
+    z-index: 5;
+    padding: 0 10px;
+    background-color: white;
 }
 
 input {

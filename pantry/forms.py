@@ -16,18 +16,18 @@ class CreateUserForm(UserCreationForm):
         model = User
         fields = ['first_name', 'last_name', 'username', 'email', 'password1', 'password2']
 
-    first_name = forms.CharField(required=True, widget=TextInput(attrs={'class':'form-input', 'placeholder':'First Name'}), label='First Name')
-    last_name = forms.CharField(required=True, widget=TextInput(attrs={'class':'form-input', 'placeholder':'Last Name'}), label='Last Name')
-    username = forms.CharField(required=True, widget=TextInput(attrs={'class':'form-input', 'placeholder':'Userame'}), label='Username')
-    email = forms.CharField(required=True, widget=TextInput(attrs={'class':'form-input', 'placeholder':'Email'}), label='Email')
+    first_name = forms.CharField(required=True, widget=TextInput(attrs={'class':'form-input'}), label='First Name')
+    last_name = forms.CharField(required=True, widget=TextInput(attrs={'class':'form-input'}), label='Last Name')
+    username = forms.CharField(required=True, widget=TextInput(attrs={'class':'form-input'}), label='Username')
+    email = forms.CharField(required=True, widget=TextInput(attrs={'class':'form-input'}), label='Email')
 
 
 class LoginForm(AuthenticationForm):
     '''
         Authenticate a user (Model Form)
     '''
-    username = forms.CharField(required=True, widget=TextInput(attrs={'placeholder':'Username'}), label='')
-    password = forms.CharField(required=True, widget=PasswordInput(attrs={'placeholder':'Password'}), label='')
+    username = forms.CharField(required=True, widget=TextInput(attrs={'class':'login-input', 'placeholder':'Username'}), label='')
+    password = forms.CharField(required=True, widget=PasswordInput(attrs={'class':'login-input', 'placeholder':'Password'}), label='')
 
 
 class NewPantryItemForm(forms.ModelForm):
@@ -38,14 +38,15 @@ class NewPantryItemForm(forms.ModelForm):
         model = PantryItem
         fields = ['name', 'quantity', 'expiration_date']
         widgets = {
+            'quantity' : forms.NumberInput(attrs={'min': 0}),
             'expiration_date': forms.DateInput(attrs={'type': 'date'}),
         }
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['quantity'].required = False
+        self.fields['quantity'].label = "Quantity (Optional)"
         self.fields['expiration_date'].required = False
         self.fields['expiration_date'].label = "Expiration Date (Optional)"
 
     name = forms.CharField(required=True, widget=forms.TextInput(), label='Item Name')
-    quantity = forms.IntegerField(required=False, widget=forms.TextInput(), label='Quantity (Optional)')

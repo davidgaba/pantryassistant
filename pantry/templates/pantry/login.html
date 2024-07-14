@@ -9,7 +9,7 @@
         </div>
         <input class="btn btn-primary" type="submit" value="Log In"/>
 
-        <p>or</p>
+        <p id="p-or">or</p>
 
         <div class="sso-container">
             <button class="google-login" type="button">
@@ -21,10 +21,6 @@
                 <p class="sso-text">Continue with Facebook</p>
             </button>
         </div>
-
-        
         <p>Don't have an account? <a href="{% url 'register' %}">Register now</a></p>
-
-        
     </form>
 {% endblock %}
