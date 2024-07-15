@@ -50,3 +50,25 @@ class NewPantryItemForm(forms.ModelForm):
         self.fields['expiration_date'].label = "Expiration Date (Optional)"
 
     name = forms.CharField(required=True, widget=forms.TextInput(), label='Item Name')
+
+
+class EditPantryItemForm(forms.ModelForm):
+    '''
+        Edit an item's fields (Model Form)
+    '''
+    class Meta:
+        model = PantryItem
+        fields = ['quantity', 'expiration_date']
+        widgets = {
+            'quantity' : forms.NumberInput(attrs={'min': 0}),
+            'expiration_date': forms.DateInput(attrs={'type': 'date'}),
+        }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['quantity'].required = False
+        self.fields['quantity'].label = "Quantity"
+        self.fields['expiration_date'].required = False
+        self.fields['expiration_date'].label = "Expiration Date"
+
+    

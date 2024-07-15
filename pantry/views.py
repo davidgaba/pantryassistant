@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .forms import CreateUserForm, LoginForm, NewPantryItemForm
+from .forms import CreateUserForm, LoginForm, NewPantryItemForm, EditPantryItemForm
 from .models import Recipe, PantryItem
 from django.db.models import Q
 from django.contrib.auth.models import User
@@ -177,13 +177,26 @@ def pantry_list(request):
     if request.method == 'POST':
         new_item_form = NewPantryItemForm(request.POST)
 
-        if new_item_form.is_valid():
-            new_item = new_item_form.save(commit=False)
-            new_item.user = request.user  # Set the user before saving
-            new_item.save()
-            return redirect('pantry_list')  # Redirect to the same view after saving
-        elif request.POST.get("save"):
+        if request.POST.get("addItem"):
+            if new_item_form.is_valid():
+                new_item = new_item_form.save(commit=False)
+                new_item.user = request.user  # Set the user before saving
+                new_item.save()
+                return redirect('pantry_list')  # Redirect to the same view after saving
             
+        elif request.POST.get("saveList"):
+
+            pantry_items = PantryItem.objects.filter(user=request.user)
+
+            for pantry_item in pantry_items:
+
+                if request.POST.get(f"pi-{pantry_item.id}") == "clicked":
+                    pantry_item.in_stock = True
+                else:
+                    pantry_item.in_stock = False
+
+                pantry_item.save()
+
             return redirect('pantry_list')
     else:
         new_item_form = NewPantryItemForm()
@@ -192,6 +205,7 @@ def pantry_list(request):
 
     context = {
         'new_item_form' : NewPantryItemForm(),
+        'edit_item_form' : EditPantryItemForm(),
         'pantry_items': pantry_items, 
     }
 

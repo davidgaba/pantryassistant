@@ -25,8 +25,9 @@ class PantryItem(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     name = models.CharField(max_length=100)
     in_stock = models.BooleanField(default=True)
-    quantity = models.IntegerField(default=1, blank=True, null=True)
+    quantity = models.IntegerField(default='', blank=True, null=True)
     expiration_date = models.DateField(blank=True, null=True)
     
     def __str__(self):
-        return f"({self.user}): {self.name.title()} - {0 if self.quantity is None else 0} "
+        return f"({self.user}): {self.name.title()} \n\t In stock: {self.in_stock} \n\t Expiration Date: {self.expiration_date}" if self.quantity is None else f"({self.user}): {self.name.title()} - {self.quantity} \n\t In stock: {self.in_stock} \n\t Expiration Date: {self.expiration_date}"
+ 
