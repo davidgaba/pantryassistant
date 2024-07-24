@@ -26,6 +26,7 @@ class PantryItem(models.Model):
     name = models.CharField(max_length=100)
     in_stock = models.BooleanField(default=True)
     quantity = models.IntegerField(default='', blank=True, null=True)
+    units = models.CharField(max_length=50, default="", blank=True, null=True)
     expiration_date = models.DateField(blank=True, null=True)
     
     def __str__(self):

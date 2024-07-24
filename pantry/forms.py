@@ -36,7 +36,7 @@ class NewPantryItemForm(forms.ModelForm):
     '''
     class Meta:
         model = PantryItem
-        fields = ['name', 'quantity', 'expiration_date']
+        fields = ['name', 'quantity', 'units', 'expiration_date']
         widgets = {
             'quantity' : forms.NumberInput(attrs={'min': 0}),
             'expiration_date': forms.DateInput(attrs={'type': 'date'}),
@@ -46,6 +46,8 @@ class NewPantryItemForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         self.fields['quantity'].required = False
         self.fields['quantity'].label = "Quantity (Optional)"
+        self.fields['units'].required = False
+        self.fields['units'].label = "Units (Optional)"
         self.fields['expiration_date'].required = False
         self.fields['expiration_date'].label = "Expiration Date (Optional)"
 
@@ -69,6 +71,6 @@ class EditPantryItemForm(forms.ModelForm):
         self.fields['quantity'].required = False
         self.fields['quantity'].label = "Quantity"
         self.fields['expiration_date'].required = False
-        self.fields['expiration_date'].label = "Expiration Date"
+        self.fields['expiration_date'].label = "Best Before Date"
 
     

@@ -1,6 +1,3 @@
-main {
-    padding-top: 15px;
-}
 
 section {
     margin-top: 20px;
@@ -11,9 +8,17 @@ img {
     margin-bottom: 20px;
 }
 
+h2, h3{
+    padding: 0 20px;
+    margin-bottom: 20px;
+}
+
 h3 {
     margin: 10px 0;
-    border-bottom: 2px solid #8aacf591;
+}
+
+section>div {
+    border-top: 2px solid #8aacf591;
 }
 
 footer {
@@ -21,11 +26,11 @@ footer {
 }
 
 p {
-    padding: 0 5px;
+    padding: 0 20px;
 }
 
 .ingredients-container li, .instructions-container li {
-    margin: 15px 5px;
+    margin: 15px 25px 15px 5px;
 }
 
 @media (min-width: 600px) {

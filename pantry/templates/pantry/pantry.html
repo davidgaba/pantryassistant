@@ -7,56 +7,61 @@
     <script src="{%static 'js/main.js' %}"></script>
 {% endblock %}
 
+{% block header %}My Pantry{% endblock %}
+
 {% block content %}
-    {%if pantry_items %}<h2>My Pantry:</h2>{% endif %}
     <form id="pantry-list-form" action="#" method="POST">
         {% csrf_token %}
         <div id="pantry-container">
             {%if pantry_items %}
                 <div id="save-container">
-                    <button id="save-btn" class="btn btn-outline-success" type="submit" name="saveList" value="saveList">Save</button>
+                    <button id="save-btn" type="submit" name="saveList" value="saveList">
+                        <div>
+                            Save Changes
+                        </div>
+
+                        {% if current_time %} 
+                            <div id="last-update">
+                                Last Updated: <span>{{current_time}}</span>
+                            </div>
+                        {% endif %}                      
+                    </button>
                 </div>
                 <div id="pantry-list-container">
                     <div class="pantry-list-header">
                         <div>Description</div>
-                        <div class="header-right">
-                            <div>In Stock</div>
-                            <div>Edit</div>
-                        </div>
+                        <div class="header-right">In Stock</div>
                     </div>
-                    <ul>
-                        {% for pantry_item in pantry_items %}
-                            <div class="pantry-item-container">
-                                <li>{{pantry_item.name|title}}</li>
-                                <div class="pantry-item-options">
-                                    {% if pantry_item.in_stock %}
-                                        <input type="checkbox" name="pi-{{pantry_item.id}}" value="clicked" checked>
-                                    {% else %}
-                                        <input type="checkbox" name="pi-{{pantry_item.id}}" value="clicked">
-                                    {% endif %}
-                                    <button class="edit btn" type="button" data-item-id="edit-{{pantry_item.id}}">
-                                        <svg class="pantry-item-controls" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path fill-rule="evenodd" clip-rule="evenodd" d="M8.56078 20.2501L20.5608 8.25011L15.7501 3.43945L3.75012 15.4395V20.2501H8.56078ZM15.7501 5.56077L18.4395 8.25011L16.5001 10.1895L13.8108 7.50013L15.7501 5.56077ZM12.7501 8.56079L15.4395 11.2501L7.93946 18.7501H5.25012L5.25012 16.0608L12.7501 8.56079Z" fill="#080341"></path> </g></svg>
-                                    </button>
-                                </div>
-                            </div>
-                            <div class="pantry-item-details">
-                                {% if pantry_item.quantity > 0 %}
-                                    <div>
-                                        <div>Quantity - {{pantry_item.quantity}}</div>
+                    <div>
+                        <div>
+                            {% for pantry_item in pantry_items %}
+                                <div class="pantry-item">
+                                    <div class="pantry-item-container">
+                                        <span data-item-name="{{ pantry_item.name }}" data-item-id="{{ pantry_item.id }}">{{ pantry_item.name|title }}</span>
+                                        <div class="pantry-item-options">
+                                            {% if pantry_item.in_stock %}
+                                                <input type="checkbox" name="pi-{{pantry_item.id}}" value="clicked" checked>
+                                            {% else %}
+                                                <input type="checkbox" name="pi-{{pantry_item.id}}" value="clicked">
+                                            {% endif %}
+                                        </div>
                                     </div>
-                                {% endif %}
-
-                                {% if pantry_item.expiration_date %}
-                                    <div>Expiration Date - {{pantry_item.expiration_date}}</div>
-                                {% endif %}
-                            </div>
-                            <!-- <form action="#" method="POST">
-                                {% csrf_token %}
-                                {{edit_item_form}}
-                            </form> -->
-                            
-                        {% endfor %}
-                    </ul> 
+                                    
+                                    <div class="pantry-item-details">
+                                        {% if pantry_item.quantity > 0 %}
+                                            <div>
+                                                <div>Quantity: {{pantry_item.quantity}} {% if pantry_item.units %}{{pantry_item.units}}{% endif %}</div>
+                                            </div>
+                                        {% endif %}
+        
+                                        {% if pantry_item.expiration_date %}
+                                            <div>Best Before: {{pantry_item.expiration_date|date:"M d, Y"}}</div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div> 
                 </div> 
             {% else %}
                 <p id="zero-item-message">You have <span style="font-size: 1.3rem;">0</span> items in your pantry. Select the "Add an item" button.</p>
@@ -75,23 +80,62 @@
             <button class="btn btn-success" type="submit" name="addItem" value="addItem">Add</button>
             <button id="cancelAddItem" class="btn btn-success" type="submit" name="cancel" value="cancel">Cancel</button>
         </div>
-
         <hr>
     </form>
 
-    {% if pantry_items %}
-        <div class="pantry-controls">
-            <button id="generate-btn" type="submit" class="btn btn-success">Search recipes using pantry items</button>  
-            <button id="generate-btn" type="submit" class="btn btn-success">Generate grocery list</button>   
+    <form action="" method="POST" id="edit-form">
+        {% csrf_token %}
+        <div id="edit-form-container">
+            <div id="edit-form-header">
+                <svg id="edit-back-btn" class="nav-icon" fill="#000000" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 299.021 299.021" xml:space="preserve"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g> <g> <path d="M292.866,254.432c-2.288,0-4.443-1.285-5.5-3.399c-0.354-0.684-28.541-52.949-146.169-54.727v51.977 c0,2.342-1.333,4.48-3.432,5.513c-2.096,1.033-4.594,0.793-6.461-0.63L2.417,154.392C0.898,153.227,0,151.425,0,149.516 c0-1.919,0.898-3.72,2.417-4.888l128.893-98.77c1.87-1.426,4.365-1.667,6.461-0.639c2.099,1.026,3.432,3.173,3.432,5.509v54.776 c3.111-0.198,7.164-0.37,11.947-0.37c43.861,0,145.871,13.952,145.871,143.136c0,2.858-1.964,5.344-4.75,5.993 C293.802,254.384,293.34,254.432,292.866,254.432z"></path> </g> </g> </g></svg>
+                <span>Edit Pantry Item</span>
+                <svg id="edit-save-btn" class="nav-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M4 12.6111L8.92308 17.5L20 6.5" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
+            </div>
+            <hr>
+    
+            <div class="edit-form-data">
+                <label for="name">Name</label>
+                <input type="text"/>
+        
+                <label for="">Quantity</label>
+                <input type="number">
+                
+                <label for="item-unit">Units</label>
+                <input type="text">
+        
+                <label for="">Expiration Date</label>
+                <input type="date">
+            </div>
+    
+            <button id="delete-item-btn" type="button" class="btn btn-danger">Delete Item</button>
         </div>
-    {% endif %}
-
-    <form id="delete-message-form">
-        <p>Are you sure you want to delete?</p>
-
-        <button type="submit" name="confirm-delete" value="confirm-delete">Confirm</button>
-        <button type="submit" name="cancel-delete" value="cancel-delete">Cancel</button>
     </form>
-         
 
+    <div id="delete-confirmation">
+        <div id="delete-confirmation-container">
+            <p></p>
+        </div>
+    </div>
+    
+
+
+    {% if pantry_items %}
+        <div>
+            <div class="pantry-control-text">
+                <p>
+                    <b>Search Recipes Using Pantry Items.</b> Discover recipes based on what's in your pantry! This feature searches for recipes that you can cook using the ingredients you currently have available. It helps you make the most of your pantry staples by suggesting delicious meals tailored to your inventory.
+                </p>
+        
+                <p>
+                    <b>Generate Grocery List.</b> Effortlessly create your grocery list! This function compiles a list of items you've marked as 'out-of-stock' from your pantry. It simplifies your shopping experience by ensuring you have everything you need for your recipes, making meal planning and shopping convenient and efficient.
+                </p>
+            </div>
+
+            <div class="pantry-controls">
+                <button id="generate-btn" type="submit" class="btn btn-success">Search recipes using pantry items</button>  
+                <button id="generate-btn" type="submit" class="btn btn-success">Generate grocery list</button>   
+            </div>
+        </div>
+    {% endif %}        
+    
 {% endblock %}

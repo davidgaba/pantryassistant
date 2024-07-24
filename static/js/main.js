@@ -16,9 +16,35 @@
 
 $(document).ready(function() {
 
+
+    $('#save-btn').click(function() {
+        localStorage.setItem("scrollPosition", window.scrollY);
+    });
+
+    if (localStorage.getItem("scrollPosition") !== null) {
+        window.scrollTo(0, localStorage.getItem("scrollPosition"));
+        localStorage.removeItem("scrollPosition");
+    }
+
     $("#add-item-btn").click(toggleAddItem);
     $("#cancelAddItem").click(toggleAddItem);
-    $(".delete").click(toggleDeleteCOnfirmation);
+    // $(".delete").click(toggleDeleteConfirmation);
+
+
+    $(".pantry-item-container span").click(function(){
+        const itemName = $(this).data("item-name");
+        const itemId = $(this).data("item-id");
+        const itemQuantity = $(this).data("item-qty");
+
+        $("nav").fadeOut();
+        $("#edit-form").fadeIn();
+        $("#edit-form h2 span").text(itemName);
+    });
+
+    $("#edit-back-btn, #edit-save-btn").click(function(){
+        $("nav").fadeIn();
+        $("#edit-form").fadeOut();
+    });
 
 });
 
@@ -37,17 +63,15 @@ function toggleAddItem(event){
     }
 }
 
-function toggleDeleteCOnfirmation(event){
-    event.preventDefault();
+// function toggleDeleteConfirmation(event){
+//     event.preventDefault();
 
-    console.log("CLICKED")
+//     const $deleteItemConfirmation = $("#delete-message-form");
 
-    const $deleteItemConfirmation = $("#delete-message-form");
-
-    if ($deleteItemConfirmation.css("display") === "none") {
-        $deleteItemConfirmation.fadeIn();
-    } else {
-        $deleteItemConfirmation.fadeOut();
-    }
-}
+//     if ($deleteItemConfirmation.css("display") === "none") {
+//         $deleteItemConfirmation.fadeIn();
+//     } else {
+//         $deleteItemConfirmation.fadeOut();
+//     }
+// }
 

@@ -10,7 +10,9 @@ from django.contrib.auth import authenticate
 from django.contrib.auth.decorators import login_required
 
 import requests
-import json
+
+
+import datetime
 
 from dotenv import load_dotenv
 import os
@@ -194,10 +196,16 @@ def pantry_list(request):
                     pantry_item.in_stock = True
                 else:
                     pantry_item.in_stock = False
+                    pantry_item.quantity = 0
+                    pantry_item.expiration_date = None
 
                 pantry_item.save()
 
             return redirect('pantry_list')
+        
+        elif request.POST.get():
+            pass
+        
     else:
         new_item_form = NewPantryItemForm()
 
@@ -206,7 +214,7 @@ def pantry_list(request):
     context = {
         'new_item_form' : NewPantryItemForm(),
         'edit_item_form' : EditPantryItemForm(),
-        'pantry_items': pantry_items, 
+        'pantry_items' : pantry_items, 
     }
 
     return render(request, 'pantry/pantry.html', context=context)
