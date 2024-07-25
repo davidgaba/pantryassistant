@@ -157,9 +157,9 @@ form>h3 {
 }
 
 #add-item-btn {   
-    width: 100%;
-    margin-top: 20px;
-    padding: 15px 0;
+    max-width: 100%;
+    margin: 20px 10px 0px 10px;
+    padding: 15px;
     background-color: rgb(255, 217, 0);
 }
 
@@ -168,7 +168,8 @@ form>h3 {
 .pantry-controls {
     display: flex;
     justify-content: space-evenly;
-    gap: 10px;    
+    gap: 10px;  
+    padding: 10px;  
 }
 
 .pantry-control-text {
@@ -219,6 +220,11 @@ form>h3 {
     font-size: 1.3rem;
 }
 
+#edit-form-header>button {
+    background-color: transparent;
+    border: none;
+}
+
 .edit-form-data {
     flex: 5;
 }
@@ -236,7 +242,7 @@ form>h3 {
     width: 150px;
 }
 
-#delete-item-btn {
+#edit-form-container>button{
     padding: 15px;
 }
 

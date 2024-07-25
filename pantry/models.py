@@ -30,5 +30,5 @@ class PantryItem(models.Model):
     expiration_date = models.DateField(blank=True, null=True)
     
     def __str__(self):
-        return f"({self.user}): {self.name.title()} \n\t In stock: {self.in_stock} \n\t Expiration Date: {self.expiration_date}" if self.quantity is None else f"({self.user}): {self.name.title()} - {self.quantity} \n\t In stock: {self.in_stock} \n\t Expiration Date: {self.expiration_date}"
+        return f"({self.user}):\n\t{self.name.title()} - {self.id}\n\tIn stock: {self.in_stock}\n\tQuantity: {self.quantity}\n\tUnits: {self.units}\n\tExpiration Date: {self.expiration_date}"
  

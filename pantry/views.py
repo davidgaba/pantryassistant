@@ -180,12 +180,13 @@ def pantry_list(request):
         new_item_form = NewPantryItemForm(request.POST)
 
         if request.POST.get("addItem"):
+
             if new_item_form.is_valid():
                 new_item = new_item_form.save(commit=False)
                 new_item.user = request.user  # Set the user before saving
                 new_item.save()
                 return redirect('pantry_list')  # Redirect to the same view after saving
-            
+                        
         elif request.POST.get("saveList"):
 
             pantry_items = PantryItem.objects.filter(user=request.user)
@@ -203,8 +204,30 @@ def pantry_list(request):
 
             return redirect('pantry_list')
         
-        elif request.POST.get():
-            pass
+        elif request.POST.get("editItem"):
+
+            pantry_item = get_object_or_404(PantryItem, id=int(request.POST.get("id")))
+
+            if request.POST.get("quantity"):
+                pantry_item.quantity = request.POST.get("quantity")
+                pantry_item.in_stock = True if int(pantry_item.quantity) > 0 else False
+
+            pantry_item.units = request.POST.get("unit")
+            
+            if request.POST.get("expiration-date"):
+                pantry_item.expiration_date = request.POST.get("expiration-date") if int(pantry_item.quantity) > 0 else None
+                
+
+            pantry_item.save()
+        
+        elif request.POST.get("deleteItem"):
+            
+            pantry_item = get_object_or_404(PantryItem, id=int(request.POST.get("id")))
+            pantry_item.delete()
+            
+            return redirect('pantry_list')
+        
+            
         
     else:
         new_item_form = NewPantryItemForm()
