@@ -17,14 +17,14 @@
 $(document).ready(function() {
 
 
-    // $('#save-btn').click(function() {
-    //     localStorage.setItem("scrollPosition", window.scrollY);
-    // });
+    $('#save-btn').click(function() {
+        localStorage.setItem("scrollPosition", window.scrollY);
+    });
 
-    // if (localStorage.getItem("scrollPosition") !== null) {
-    //     window.scrollTo(0, localStorage.getItem("scrollPosition"));
-    //     localStorage.removeItem("scrollPosition");
-    // }
+    if (localStorage.getItem("scrollPosition") !== null) {
+        window.scrollTo(0, localStorage.getItem("scrollPosition"));
+        localStorage.removeItem("scrollPosition");
+    }
 
     $("#add-item-btn").click(toggleAddItem);
     $("#cancelAddItem").click(toggleAddItem);

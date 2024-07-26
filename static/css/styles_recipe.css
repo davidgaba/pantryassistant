@@ -61,6 +61,7 @@ footer {
     flex-direction: column;
     width: 100vw;
     max-height: 100%;
+    position: relative;
 }
 
 .c-item a {
@@ -74,6 +75,21 @@ footer {
     border-top-left-radius: 15px;
     border-top-right-radius: 15px;
     background-color: #f0f0f093;
+}
+
+.add-favorite-btn {
+    position: absolute;
+    right: 15px;
+    top: 15px;
+    width: 45px;
+    height: 45px;
+    background-color: rgba(153, 153, 153, 0.363);
+    border-radius: 50%;
+    padding: 10px;
+    filter: invert(1);
+    fill: none;
+    z-index: 100;
+    /* display: none; */
 }
 
 .c-meta-data {

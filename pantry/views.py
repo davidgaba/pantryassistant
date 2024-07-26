@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from .forms import CreateUserForm, LoginForm, NewPantryItemForm, EditPantryItemForm
-from .models import Recipe, PantryItem
+from .models import Recipe, PantryItem, FavoriteRecipe
 from django.db.models import Q
 from django.contrib.auth.models import User
 
@@ -115,6 +115,7 @@ def fetch_random_recipes(tags):
                     image = recipe_data['image'],
                     summary = summary,
                     source_url = recipe_data['sourceUrl'],
+                    cuisines = recipe_data['cuisines'],
                     dish_types = recipe_data['dishTypes'],
                     servings = recipe_data['servings'],
                     cook_time = recipe_data['readyInMinutes'],
@@ -142,7 +143,7 @@ def recipe_list(request):
     
     # fetch_recipes()
 
-    recipes = Recipe.objects.order_by('?')[:10]
+    recipes = FavoriteRecipe.objects.order_by('?')[:10]
     new_recipes = Recipe.objects.order_by('?')[:10]
     mains = Recipe.objects.filter(Q(dish_types__contains='main dish')).order_by('?')[:10]
     snacks = Recipe.objects.filter(Q(dish_types__contains='snack') | Q(dish_types__contains='fingerfood') | Q(dish_types__contains='appetizer') | Q(dish_types__contains='side dish')).order_by('?')[:10]
@@ -245,5 +246,12 @@ def pantry_list(request):
 
 @login_required(login_url='login')
 def grocery_list(request):
-    return render(request, 'pantry/grocery_list.html')
+
+    out_of_stock_items = PantryItem.objects.filter(user=request.user, in_stock=False)
+
+    context = {
+        "out_of_stock_items" : out_of_stock_items,
+    }
+
+    return render(request, 'pantry/grocery_list.html', context=context)
 

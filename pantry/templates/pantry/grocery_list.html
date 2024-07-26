@@ -8,4 +8,16 @@
 
 {% block content %}
 <h1>GROCERY LIST</h1>
+
+    {% if out_of_stock_items%}
+
+        <ul>
+            {% for item in out_of_stock_items %}
+                <li>{{item.name|title}}</li>
+            {% endfor %}
+        </ul>
+
+    {% else %}
+        <p>All items in your pantry are currently stocked.</p>
+    {% endif %}
 {% endblock %}

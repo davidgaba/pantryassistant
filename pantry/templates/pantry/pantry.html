@@ -126,8 +126,8 @@
             </div>
 
             <div class="pantry-controls">
-                <button id="generate-btn" type="submit" class="btn btn-success">Search recipes using pantry items</button>  
-                <button id="generate-btn" type="submit" class="btn btn-success">Generate grocery list</button>   
+                <a href="{% url 'grocery_list' %}" class="generate-btn">Search recipes using pantry items</a>  
+                <a href="{% url 'grocery_list' %}" class="generate-btn">Generate grocery list</a>  
             </div>
         </div>
     {% endif %}        

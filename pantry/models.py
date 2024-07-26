@@ -4,12 +4,22 @@ from jsonfield import JSONField
 
 # Create your models here.
 
+class Ingredient(models.Model):
+    ingredient_id = models.IntegerField()
+    name = models.CharField(max_length=255, default='')
+    substitutes = JSONField(default='')
+
+    def __str__(self):
+        return self.name
+    
+
 class Recipe(models.Model):
     recipe_id = models.IntegerField()
     title = models.CharField(max_length=255, default='')
     image = models.URLField(default='')
     summary = models.TextField(default='')
     source_url = models.URLField(default='')
+    cuisines = models.TextField(default='')
     dish_types = models.TextField(default='')
     servings = models.IntegerField(default=1)
     cook_time = models.IntegerField(default=0)
@@ -20,6 +30,11 @@ class Recipe(models.Model):
     def __str__(self):
         return self.title
     
+
+class FavoriteRecipe(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE)
+
 
 class PantryItem(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)

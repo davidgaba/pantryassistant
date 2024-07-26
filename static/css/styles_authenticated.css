@@ -18,25 +18,16 @@ header {
     text-align: center;
 
     display: flex;
-    justify-content: space-evenly;
+    justify-content: space-between;
     align-items: center;
 
     padding: 15px 25px 15px 15px;
 }
 
-#profile-icon {
-    width: 35px;
-    height: 35px;
-}
-
-#profile-icon path, #logout-btn path {
-    fill: white;
-}
-
-#logout-btn {
-    width: 15px;
-    height: 15px;
-    text-decoration: none;
+.header-icon {
+    width: 30px;
+    height: auto;
+    filter: invert(1);
 }
 
 nav {
