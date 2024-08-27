@@ -83,6 +83,7 @@ def fetch_random_recipes(tags):
         "include-tags": tags,
         'limitLicense': 'true',
     }
+    
     response = requests.get(url, params=params)
 
     if response.status_code == 200:

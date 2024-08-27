@@ -1,9 +1,21 @@
 {% extends "pantry/base.html" %}
 
-{%block content%}
-<div class="account-t">
-    <a href="{% url 'login' %}" class="account-options">Log In</a>
-    <a href="{% url 'register' %}" class="account-options">Sign Up</a>
-</div>
+{% load static %}
 
+{% block style %}
+    <style>
+        #content-wrapper {
+            background-image: url("{% static 'images/cover.jpg' %}");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+    </style>
+{% endblock %}
+
+{%block content%}
+    <div class="account-t">
+        <a href="{% url 'login' %}" class="account-options">Log In</a>
+        <a href="{% url 'register' %}" class="account-options">Sign Up</a>
+    </div>
 {%endblock%}
